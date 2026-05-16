@@ -3,198 +3,195 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Xzerdn // Threat Intel Dashboard</title>
+    <title>Hacked By ./ZerNism</title>
     <style>
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            font-family: 'Courier New', Courier, monospace;
         }
-
         body {
-            background-color: #0a0f1d;
-            color: #00ff66; /* Warna ijo terminal */
+            background-color: #000;
+            color: #ffffff;
+            font-family: 'sans-serif', Courier, monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
             padding: 20px;
+            background-image: radial-gradient(circle, #0d0d0d 10%, #000 100%);
         }
-
-        .wrapper {
-            max-width: 900px;
-            margin: 0 auto;
-            border: 1px solid #00ff66;
-            padding: 20px;
-            box-shadow: 0 0 15px rgba(0, 255, 102, 0.2);
-            background: #0d1527;
-        }
-
-        header {
+        .container {
             text-align: center;
-            border-bottom: 2px dashed #00ff66;
-            padding-bottom: 15px;
+            max-width: 700px;
+            width: 100%;
+        }
+        .avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+            border: 2px solid #ff0000;
+            background-color: #111;
+            display: inline-block;
+            overflow: hidden;
             margin-bottom: 25px;
         }
-
-        header h1 {
-            font-size: 1.8rem;
-            text-shadow: 0 0 8px rgba(0, 255, 102, 0.6);
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
-        @media (max-width: 768px) {
-            .grid { grid-template-columns: 1fr; }
-        }
-
-        .card {
-            border: 1px solid #005511;
-            background: #070c16;
-            padding: 15px;
-            border-radius: 4px;
-        }
-
-        .card h3 {
-            color: #fff;
-            margin-bottom: 10px;
-            font-size: 1.1rem;
-            border-bottom: 1px solid #00ff66;
-            padding-bottom: 5px;
-        }
-
-        input, select, button {
+        /* Style untuk video agar pas di dalam kotak avatar */
+        .avatar video {
             width: 100%;
-            padding: 10px;
-            background: #111a2e;
-            border: 1px solid #00ff66;
-            color: #fff;
-            margin-top: 8px;
-            font-family: inherit;
+            height: 100%;
+            object-fit: cover;
         }
-
-        button {
-            background: #00ff66;
-            color: #000;
+        h1 {
+            font-size: 24px;
+            color: #ff0000;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+        .quotes {
+            font-size: 14px;
+            color: #cccccc;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+        .ascii-art {
+            color: #ffffff;
+            font-size: 12px;
+            white-space: pre;
+            margin: 25px 0;
+            line-height: 1.2;
+            display: inline-block;
+            text-align: left;
+        }
+        .thanks-box {
+            border-top: 1px dashed #ff0000;
+            border-bottom: 1px dashed #ff0000;
+            padding: 15px;
+            margin-bottom: 30px;
+            background: rgba(15, 0, 0, 0.4);
+        }
+        .thanks-title {
+            color: #ff0000;
             font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 13px;
+            text-transform: uppercase;
+        }
+        .thanks-list {
+            font-size: 12px;
+            color: #aaaaaa;
+            word-spacing: 3px;
+            line-height: 1.5;
+        }
+        .btn-audio {
+            background: linear-gradient(45deg, #ff0000, #990000);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 13px;
+            border-radius: 20px;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.4);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
             cursor: pointer;
-            transition: 0.2s;
+            transition: 0.3s;
         }
-
-        button:hover {
-            background: #fff;
-            border-color: #fff;
-            box-shadow: 0 0 10px #fff;
+        .btn-audio:hover {
+            box-shadow: 0 0 25px rgba(255, 0, 0, 0.8);
+            transform: scale(1.05);
         }
-
-        .result-box {
-            margin-top: 15px;
-            background: #050811;
-            padding: 10px;
-            border-left: 3px solid #ff3333;
-            font-size: 0.85rem;
-            color: #00ffbb;
-            white-space: pre-line;
-            min-height: 50px;
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #fff;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        /* Efek animasi berkedip pada dot saat musik menyala */
+        .playing {
+            animation: pulse 1s infinite alternate;
+        }
+        @keyframes pulse {
+            from { transform: scale(1); opacity: 0.4; }
+            to { transform: scale(1.3); opacity: 1; box-shadow: 0 0 10px #fff; }
         }
     </style>
 </head>
 <body>
 
-<div class="wrapper">
-    <header>
-        <h1>[ XZERDN THREAT INTEL & OSINT CENTER ]</h1>
-        <p style="color: #888; font-size: 0.8rem; margin-top: 5px;">Sistem Pemantauan & Investigasi Target Sederhana</p>
-    </header>
+    <audio id="myMusic" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop></audio>
 
-    <div class="grid">
-        <div class="card">
-            <h3>1. IP Address Target Tracer</h3>
-            <p style="font-size: 0.8rem; color: #aaa;">Lacak lokasi, ISP, dan data publik dari IP Target.</p>
-            <input type="text" id="ipInput" placeholder="Masukkan IP (Contoh: 8.8.8.8)">
-            <button onclick="traceIP()">Lacak IP Target</button>
-            <div class="result-box" id="ipResult">> Masukkan IP lalu klik lacak...</div>
+    <div class="container">
+        <div class="avatar">
+            <video id="myVideo" loop muted playsinline>
+                <source src="https://files.catbox.moe/aq00uk.mp4" type="video/mp4">
+            </video>
         </div>
 
-        <div class="card">
-            <h3>2. Google Dorking Generator</h3>
-            <p style="font-size: 0.8rem; color: #aaa;">Instan nyari file log, vuln, atau admin panel di target.</p>
-            <input type="text" id="targetDomain" placeholder="Target Domain (Contoh: target.com)">
-            <select id="dorkType">
-                <option value="admin">Cari Halaman Login Admin</option>
-                <option value="config">Cari File Konfigurasi (.env, .conf)</option>
-                <option value="log">Cari File Log Bocor (.log)</option>
-            </select>
-            <button onclick="generateDork()">Eksekusi Google Dork</button>
+        <h1>Hacked By ./ZerNism</h1>
+
+        <div class="quotes">
+            Your name still exist in the database of my mind,<br>
+            even after the entire system crashed<br>
+            -Zer
+        </div>
+
+        <div class="ascii-art">
+ _____           _   _ _
+|__  /___ _ __  | \ | (_)
+  / // _ \ '__| |  \| |
+ /|  __/ |    | |\  | |
+/____\___|_|    |_| \_|_|
+        </div>
+
+        <div class="thanks-box">
+            <div class="thanks-title">Thanks To Friends:</div>
+            <div class="thanks-list">
+                pasko cyber rexor - traser sec team - Tegal cyber team
+            </div>
+        </div>
+
+        <div class="footer-link">
+            <button class="btn-audio" onclick="togglePlay()" id="playBtn">
+                <span class="pulse-dot" id="dot"></span> [ TAP TO PLAY ]
+            </button>
         </div>
     </div>
 
-    <footer style="margin-top: 30px; text-align: center; font-size: 0.75rem; color: #555; border-top: 1px dashed #333; padding-top: 15px;">
-        Console Version 1.0 // Terkoneksi ke API Publik // Jaga Anonimitas Lu.
-    </footer>
-</div>
+    <script>
+        const music = document.getElementById("myMusic");
+        const video = document.getElementById("myVideo");
+        const btn = document.getElementById("playBtn");
+        const dot = document.getElementById("dot");
 
-<script>
-    // FUNGSI LACAK IP PAKE API GRATISAN
-    async function traceIP() {
-        const ip = document.getElementById('ipInput').value.trim();
-        const resultBox = document.getElementById('ipResult');
-        
-        if (!ip) {
-            resultBox.innerText = "> Woi, isi dulu IP-nya cok!";
-            return;
-        }
 
-        resultBox.innerText = "> Sedang melakukan querying ke database...";
+        window.addEventListener('load', () => {
+            video.play().catch(err => console.log("Video autoplay diblokir browser sebelum interaksi"));
+        });
 
-        try {
-            const response = await fetch(`https://ipapi.co/${ip}/json/`);
-            if (!response.ok) throw new Error();
-            const data = await response.json();
+        function togglePlay() {
+            if (music.paused) {
 
-            if(data.error) {
-                resultBox.innerText = `> Error: ${data.reason}`;
-                return;
+                music.volume = 0.6
+                music.play();
+                
+
+                video.play();
+                
+
+                btn.innerHTML = '<span class="pulse-dot playing" id="dot"></span> MUSIC ON';
+            } else {
+
+                music.pause();
+                btn.innerHTML = '<span class="pulse-dot" id="dot"></span> MUSIC OFF';
             }
-
-            resultBox.innerHTML = `
-                <b>[ STATUS SECURE ]</b><br>
-                IP      : ${data.ip}<br>
-                Kota    : ${data.city}, ${data.region}<br>
-                Negara  : ${data.country_name}<br>
-                ISP     : ${data.org}<br>
-                Lat/Lon : ${data.latitude}, ${data.longitude}
-            `;
-        } catch (error) {
-            resultBox.innerText = "> Gagal mengambil data. Pastikan IP valid atau kuota API habis.";
         }
-    }
-
-    // FUNGSI GENERATE GOOGLE DORK DAN LANGSUNG BUKA TAB BARU
-    function generateDork() {
-        const domain = document.getElementById('targetDomain').value.trim();
-        const type = document.getElementById('dorkType').value;
-
-        if (!domain) {
-            alert("Isi domain targetnya dulu cok!");
-            return;
-        }
-
-        let query = "";
-        if (type === "admin") {
-            query = `site:${domain} inurl:admin | login | wp-login`;
-        } else if (type === "config") {
-            query = `site:${domain} ext:env | ext:yaml | ext:conf | ext:txt "DB_PASSWORD"`;
-        } else if (type === "log") {
-            query = `site:${domain} ext:log | inurl:log`;
-        }
-
-        // Buka tab google otomatis dengan dorking-nya
-        const googleUrl = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
-        window.open(googleUrl, '_blank');
-    }
-</script>
-
+    </script>
 </body>
 </html>
